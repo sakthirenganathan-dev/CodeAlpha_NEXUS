@@ -24,8 +24,8 @@ import './App.css';
 const INITIAL_SCORE = 1000;
 
 export default function App() {
-  // Screens: 'boot' | 'landing' | 'playing' | 'victory' | 'gameover'
-  const [screen, setScreen] = useState('boot');
+  // Screens: 'landing' | 'playing' | 'victory' | 'gameover'
+  const [screen, setScreen] = useState('landing');
 
   // Theme: 'cyan' | 'matrix' | 'violet'
   const [theme, setTheme] = useState(() => {
@@ -448,6 +448,8 @@ export default function App() {
             theme={theme}
             onChangeTheme={setTheme}
             onOpenCodex={() => setIsCodexOpen(true)}
+            soundEnabled={soundEnabled}
+            onToggleSound={handleToggleSound}
           />
         )}
 
