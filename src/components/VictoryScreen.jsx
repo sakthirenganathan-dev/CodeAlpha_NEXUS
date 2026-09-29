@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import confetti from 'canvas-confetti';
 import { CheckCircle2, ArrowRight, RotateCcw, Home, Sparkles, Award } from 'lucide-react';
 import { DIFFICULTY_TIERS, getRankByScore } from '../data/words';
 
@@ -17,6 +18,17 @@ export default function VictoryScreen({
 }) {
   const tierConfig = DIFFICULTY_TIERS[missionWord.difficulty] || DIFFICULTY_TIERS.EASY;
   const currentRank = getRankByScore(totalSolved);
+
+  useEffect(() => {
+    try {
+      confetti({
+        particleCount: 90,
+        spread: 80,
+        origin: { y: 0.6 },
+        colors: ['#00f0ff', '#00ff88', '#7928ca', '#ffffff']
+      });
+    } catch (_) {}
+  }, []);
 
   return (
     <div className="game-modal-overlay victory-mode" role="dialog" aria-modal="true">
