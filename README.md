@@ -3,6 +3,12 @@
 > *"Analyze the clue. Decode the word. Break the system."*  
 > A production-quality, futuristic cyber-intelligence word decryption web game built with React, Vite, and modern CSS.
 
+🎮 **[PLAY LIVE ONLINE DEMO](https://sakthirenganathan-dev.github.io/CodeAlpha_NEXUS/)**  
+[![Live Game](https://img.shields.io/badge/LIVE%20DEMO-GitHub%20Pages-00f0ff?style=for-the-badge&logo=github)](https://sakthirenganathan-dev.github.io/CodeAlpha_NEXUS/)
+[![Build & Deploy](https://github.com/sakthirenganathan-dev/CodeAlpha_NEXUS/actions/workflows/deploy.yml/badge.svg)](https://github.com/sakthirenganathan-dev/CodeAlpha_NEXUS/actions)
+[![React](https://img.shields.io/badge/React-19-61dafb?style=for-the-badge&logo=react)](https://react.dev)
+[![Vite](https://img.shields.io/badge/Vite-8-646cff?style=for-the-badge&logo=vite)](https://vite.dev)
+
 ---
 
 ## 📊 Question Database & Tier Segregation
