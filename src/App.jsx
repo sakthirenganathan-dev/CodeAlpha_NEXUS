@@ -431,27 +431,25 @@ export default function App() {
         <div className="ambient-spot spot-secondary"></div>
       </div>
 
-      <div className="nexus-main-wrapper">
-        {/* Boot Loader Screen */}
-        {screen === 'boot' && (
-          <BootScreen onComplete={() => setScreen('landing')} />
-        )}
-
-        {/* Landing / Mission Launchpad Screen */}
-        {screen === 'landing' && (
-          <LandingScreen
-            onStartGame={handleStartGame}
-            selectedDifficulty={selectedDifficulty}
-            onChangeDifficulty={setSelectedDifficulty}
-            totalSolved={totalSolved}
-            highScore={highScore}
-            theme={theme}
-            onChangeTheme={setTheme}
-            onOpenCodex={() => setIsCodexOpen(true)}
-            soundEnabled={soundEnabled}
-            onToggleSound={handleToggleSound}
-          />
-        )}
+      {screen === 'landing' ? (
+        <LandingScreen
+          onStartGame={handleStartGame}
+          selectedDifficulty={selectedDifficulty}
+          onChangeDifficulty={setSelectedDifficulty}
+          totalSolved={totalSolved}
+          highScore={highScore}
+          theme={theme}
+          onChangeTheme={setTheme}
+          onOpenCodex={() => setIsCodexOpen(true)}
+          soundEnabled={soundEnabled}
+          onToggleSound={handleToggleSound}
+        />
+      ) : (
+        <div className="nexus-main-wrapper">
+          {/* Boot Loader Screen if activated */}
+          {screen === 'boot' && (
+            <BootScreen onComplete={() => setScreen('landing')} />
+          )}
 
         {/* Main Gameplay Screen */}
         {(screen === 'playing' || screen === 'victory' || screen === 'gameover') && (
@@ -583,15 +581,16 @@ export default function App() {
             onReturnToNexus={handleReturnToNexus}
           />
         )}
-
-        {/* Intelligence Archive / Codex Modal */}
-        {isCodexOpen && (
-          <CodexModal
-            completedWords={completedWords}
-            onClose={() => setIsCodexOpen(false)}
-          />
-        )}
       </div>
+      )}
+
+      {/* Global Intelligence Archive / Codex Modal */}
+      {isCodexOpen && (
+        <CodexModal
+          completedWords={completedWords}
+          onClose={() => setIsCodexOpen(false)}
+        />
+      )}
     </div>
   );
 }

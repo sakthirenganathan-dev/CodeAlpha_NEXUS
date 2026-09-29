@@ -210,43 +210,44 @@ export default function LandingScreen({
       {/* Main Centered Cinematic Hero Stage */}
       <main className="launch-center-stage">
         {/* Central Futuristic Decryption Core Visual (Behind Hero with 3D Parallax Tilt) */}
-        <motion.div
-          className="decryption-core-container"
-          style={{ rotateX: coreRotateX, rotateY: coreRotateY }}
-          aria-hidden="true"
-        >
-          {/* Outermost Precision Rotating Ring */}
-          <div className="core-ring core-ring-outer"></div>
+        <div className="decryption-core-wrapper" aria-hidden="true">
+          <motion.div
+            className="decryption-core-container"
+            style={{ rotateX: coreRotateX, rotateY: coreRotateY }}
+          >
+            {/* Outermost Precision Rotating Ring */}
+            <div className="core-ring core-ring-outer"></div>
 
-          {/* Counter-Rotating Segmented Tech Ring */}
-          <div className="core-ring core-ring-segmented"></div>
+            {/* Counter-Rotating Segmented Tech Ring */}
+            <div className="core-ring core-ring-segmented"></div>
 
-          {/* Inner Dashed Orbital Track with Glowing Nodes */}
-          <div className="core-orbital-track orbit-track-1">
-            <span className="orbit-node node-alpha"></span>
-          </div>
-          <div className="core-orbital-track orbit-track-2">
-            <span className="orbit-node node-beta"></span>
-          </div>
+            {/* Inner Dashed Orbital Track with Glowing Nodes */}
+            <div className="core-orbital-track orbit-track-1">
+              <span className="orbit-node node-alpha"></span>
+            </div>
+            <div className="core-orbital-track orbit-track-2">
+              <span className="orbit-node node-beta"></span>
+            </div>
 
-          {/* Inner Static Concentric Target Ring */}
-          <div className="core-ring core-ring-inner"></div>
+            {/* Inner Static Concentric Target Ring */}
+            <div className="core-ring core-ring-inner"></div>
 
-          {/* SVG Geometric Crosshairs & Radial Elements */}
-          <svg className="core-svg-overlay" viewBox="0 0 540 540" fill="none">
-            <circle cx="270" cy="270" r="260" stroke="rgba(0, 240, 255, 0.08)" strokeWidth="1" />
-            <circle cx="270" cy="270" r="200" stroke="rgba(0, 240, 255, 0.12)" strokeWidth="1" strokeDasharray="5 7" />
-            <circle cx="270" cy="270" r="140" stroke="rgba(0, 240, 255, 0.16)" strokeWidth="1" strokeDasharray="3 5" />
-            <line x1="270" y1="15" x2="270" y2="525" stroke="rgba(0, 240, 255, 0.06)" strokeWidth="1" />
-            <line x1="15" y1="270" x2="525" y2="270" stroke="rgba(0, 240, 255, 0.06)" strokeWidth="1" />
-          </svg>
+            {/* SVG Geometric Crosshairs & Radial Elements */}
+            <svg className="core-svg-overlay" viewBox="0 0 540 540" fill="none">
+              <circle cx="270" cy="270" r="260" stroke="rgba(0, 240, 255, 0.08)" strokeWidth="1" />
+              <circle cx="270" cy="270" r="200" stroke="rgba(0, 240, 255, 0.12)" strokeWidth="1" strokeDasharray="5 7" />
+              <circle cx="270" cy="270" r="140" stroke="rgba(0, 240, 255, 0.16)" strokeWidth="1" strokeDasharray="3 5" />
+              <line x1="270" y1="15" x2="270" y2="525" stroke="rgba(0, 240, 255, 0.06)" strokeWidth="1" />
+              <line x1="15" y1="270" x2="525" y2="270" stroke="rgba(0, 240, 255, 0.06)" strokeWidth="1" />
+            </svg>
 
-          {/* Central Pulsar Node */}
-          <div className="core-center-pulsar">
-            <span className="pulsar-dot"></span>
-            <span className="pulsar-halo"></span>
-          </div>
-        </motion.div>
+            {/* Central Pulsar Node */}
+            <div className="core-center-pulsar">
+              <span className="pulsar-dot"></span>
+              <span className="pulsar-halo"></span>
+            </div>
+          </motion.div>
+        </div>
 
         {/* Foreground Content Stack (Staggered with Framer Motion) */}
         <motion.div
