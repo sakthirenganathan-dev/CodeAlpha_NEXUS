@@ -99,6 +99,466 @@
 }
 
 /* -----------------------------------------------------------------------------
+   BOOT LOADER / OPERATOR AUTHENTICATION SCREEN
+   ----------------------------------------------------------------------------- */
+.boot-container {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background-color: var(--bg-core);
+  overflow-y: auto;
+}
+
+.boot-ambient-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.boot-grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(0, 240, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 240, 255, 0.05) 1px, transparent 1px);
+}
+
+.boot-radial-spot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 240, 255, 0.12) 0%, rgba(121, 40, 202, 0.08) 50%, transparent 75%);
+  filter: blur(60px);
+}
+
+.boot-scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.18),
+    rgba(0, 0, 0, 0.18) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  opacity: 0.6;
+}
+
+.boot-terminal-window {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 680px;
+  background: rgba(9, 14, 26, 0.88);
+  border: 1px solid var(--cyan-primary);
+  border-radius: 16px;
+  box-shadow: 0 0 50px var(--cyan-glow), 0 25px 60px rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(20px);
+  overflow: hidden;
+  animation: bootWindowAppear 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes bootWindowAppear {
+  0% { transform: scale(0.94); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.terminal-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1.25rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(0, 240, 255, 0.18);
+}
+
+.terminal-dots {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.terminal-dots .dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.terminal-dots .dot.red {
+  background: #ff5f56;
+  box-shadow: 0 0 8px rgba(255, 95, 86, 0.6);
+}
+
+.terminal-dots .dot.yellow {
+  background: #ffbd2e;
+  box-shadow: 0 0 8px rgba(255, 189, 46, 0.6);
+}
+
+.terminal-dots .dot.green {
+  background: #27c93f;
+  box-shadow: 0 0 8px rgba(39, 201, 63, 0.6);
+}
+
+.terminal-title {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  letter-spacing: 0.08em;
+}
+
+.terminal-title .title-icon {
+  color: var(--cyan-primary);
+}
+
+.terminal-timestamp {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--green-success);
+}
+
+.status-blink-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green-success);
+  box-shadow: 0 0 8px var(--green-success);
+  animation: blinkNode 1s infinite alternate;
+}
+
+@keyframes blinkNode {
+  0% { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+
+.terminal-body {
+  padding: 1.75rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.boot-branding {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.4rem;
+}
+
+.boot-brand-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  background: rgba(0, 240, 255, 0.08);
+  border: 1px solid rgba(0, 240, 255, 0.25);
+  color: var(--cyan-primary);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.boot-glitch-title {
+  font-family: var(--font-display);
+  font-size: 2.8rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  color: var(--text-pure);
+  text-shadow: 0 0 30px var(--cyan-glow);
+  margin: 0.2rem 0;
+  line-height: 1;
+}
+
+.boot-subtitle {
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  color: var(--cyan-primary);
+  text-transform: uppercase;
+}
+
+.boot-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+}
+
+/* Progress Gauge */
+.boot-progress-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.boot-progress-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.boot-progress-label-row .progress-title {
+  color: var(--text-secondary);
+  letter-spacing: 0.06em;
+}
+
+.boot-progress-label-row .progress-percent {
+  color: var(--cyan-primary);
+}
+
+.boot-progress-track {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 240, 255, 0.2);
+}
+
+.boot-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--cyan-primary), var(--green-success));
+  box-shadow: 0 0 10px var(--cyan-glow);
+  border-radius: 9999px;
+  transition: width 0.25s ease-out;
+}
+
+/* Console Logs Box */
+.boot-logs-section {
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(0, 240, 255, 0.14);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.logs-header-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.9rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+}
+
+.logs-content-area {
+  padding: 0.85rem 1.1rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  min-height: 125px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.boot-log-line {
+  display: flex;
+  gap: 0.5rem;
+  line-height: 1.45;
+  animation: logLineIn 0.2s ease-out;
+}
+
+@keyframes logLineIn {
+  from { opacity: 0; transform: translateX(-4px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.boot-log-line .log-prefix {
+  color: var(--cyan-primary);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.boot-log-line .log-text {
+  color: #00ff88;
+  text-shadow: 0 0 8px rgba(0, 255, 136, 0.35);
+}
+
+.boot-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 14px;
+  background: var(--green-success);
+  box-shadow: 0 0 6px var(--green-glow);
+  animation: blinkCursor 0.7s infinite;
+  margin-top: 0.2rem;
+}
+
+@keyframes blinkCursor {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+/* Status Panel */
+.boot-status-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all var(--transition-normal);
+}
+
+.boot-status-panel.revealed {
+  border-color: rgba(0, 255, 136, 0.3);
+  background: rgba(0, 255, 136, 0.04);
+}
+
+.status-label-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.status-label-group .status-key {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.06em;
+}
+
+.status-label-group .status-val {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.status-label-group .status-val.online {
+  color: var(--green-success);
+  text-shadow: 0 0 10px var(--green-glow);
+}
+
+.status-label-group .status-val.secure {
+  color: var(--cyan-primary);
+}
+
+/* Action CTA Area */
+.boot-action-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+  margin-top: 0.35rem;
+}
+
+.btn-start-mission {
+  width: 100%;
+  position: relative;
+  padding: 1.05rem 2rem;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.24), rgba(121, 40, 202, 0.28));
+  border: 1px solid var(--cyan-primary);
+  color: var(--text-pure);
+  font-family: var(--font-display);
+  font-size: 0.96rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 0 0 30px var(--cyan-glow), 0 10px 25px rgba(0, 0, 0, 0.6);
+  transition: all var(--transition-normal);
+}
+
+.btn-start-mission:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.36), rgba(121, 40, 202, 0.38));
+  box-shadow: 0 0 45px var(--cyan-glow), 0 15px 35px rgba(0, 0, 0, 0.7);
+  border-color: #ffffff;
+}
+
+.btn-start-mission:active {
+  transform: translateY(1px);
+}
+
+.btn-start-mission .btn-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+}
+
+.btn-start-mission .btn-arrow {
+  transition: transform var(--transition-fast);
+}
+
+.btn-start-mission:hover .btn-arrow {
+  transform: translateX(4px);
+}
+
+.boot-hint {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-align: center;
+  letter-spacing: 0.04em;
+}
+
+.boot-hint kbd {
+  padding: 0.12rem 0.4rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: var(--cyan-primary);
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .terminal-body {
+    padding: 1.25rem 1rem;
+    gap: 1rem;
+  }
+
+  .boot-glitch-title {
+    font-size: 2.1rem;
+  }
+
+  .boot-status-panel {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
+}
+
+/* -----------------------------------------------------------------------------
    LANDING / LAUNCHPAD SCREEN
    ----------------------------------------------------------------------------- */
 .landing-container {
